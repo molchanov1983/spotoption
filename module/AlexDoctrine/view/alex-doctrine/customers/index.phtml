@@ -1,0 +1,75 @@
+Create form that inserts/update new row to Customers table (with AJAX)
+Попробуйте ввести русские символы для того чтобы убедиться что валидация на сервере тоже работает
+<br /><br />
+
+
+<?php
+//add js on the bottom on the page
+    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/plugin/jquery.tmpl.min.js');
+    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/plugin/jquery.validate.min.js');
+    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/plugin/jquery.loadmask.min.js');
+    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/APP.js');
+    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/customers.js');
+// add css on the top of the page
+    $this->headLink()->appendStylesheet($this->basePath() .'/css/alex.css');
+    $this->headLink()->appendStylesheet($this->basePath() .'/css/jquery.loadmask.css');
+?>
+<span id="for_server_error"></span>
+<?php
+
+$form = $this->form;
+$form->prepare();
+// Assuming the "contact/process" route exists...
+$form->setAttribute('action', $this->url('AlexDoctrine-1', array('action'=>'add')));
+// Set the method attribute for the form
+$form->setAttribute('method', 'post');?>
+<div>
+    <?php echo $this->form()->openTag($form); ?>
+    <?php echo $this->formCollection($form); ?>
+    <?php echo $this->form()->closeTag(); ?>
+
+</div>
+<br /><br />
+<div>
+    <table class="table tab-customers">
+        <tr>
+            <th>Number/id</th>
+            <th>firstName</th>
+            <th>lastName</th>
+            <th>phone</th>
+            <th>address</th>
+            <th>status</th>
+        </tr>
+        <script>var customersList = <?php echo $this->allCustomersJson;?></script>
+        <script id="onecustomer-tmpl" type="text/x-jquery-tmpl">
+            <tr class="tr_${id}">
+                    <td>${id}</td>
+                    <td>${firstName}</td>
+                    <td>${lastName}</td>
+                    <td>${phone}</td>
+                    <td>${address}</td>
+                    <td>${status}</td>
+                    <td>
+                        <a  class="edit_customer" href="<?php echo $this->url('AlexDoctrine-1', array('action'=>'edit'));?>/${id}">Edit</a>
+                        <a name="${id}" class="delete_customer" href="<?php echo $this->url('AlexDoctrine-1',array('action'=>'delete'));?>/${id}">Delete</a>
+                    </td>
+            </tr>
+        </script>
+    </table>
+
+
+</div>
+
+
+<!-- <tr>
+                    <td>${id}</td>
+                    <td>${firstName}</td>
+                    <td>${lastName}</td>
+                    <td>${phone}</td>
+                    <td>${address}</td>
+                    <td>${status}</td>
+                    <td>
+                        <a class="edit_customer" href="<?php //echo $this->url('AlexDoctrine-1', array('action'=>'edit'));?>/${id}">Edit</a>
+                        <a class="delete_customer" href="<?php //echo $this->url('AlexDoctrine-1',array('action'=>'delete'));?>/${id}">Delete</a>
+                    </td>
+            </tr>-->

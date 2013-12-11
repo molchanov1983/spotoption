@@ -1,0 +1,58 @@
+Create form that inserts/update new row to Calls table (with AJAX)
+
+<br /><br />
+
+
+<?php
+//add js on the bottom on the page
+    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/plugin/jquery.tmpl.min.js');
+    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/plugin/jquery.validate.min.js');
+    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/plugin/jquery.loadmask.min.js');
+    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/APP.js');
+    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/calls.js');
+// add css on the top of the page
+    $this->headLink()->appendStylesheet($this->basePath() .'/css/alex.css');
+    $this->headLink()->appendStylesheet($this->basePath() .'/css/jquery.loadmask.css');
+?>
+<span id="for_server_error"></span>
+<?php
+
+$form = $this->form;
+$form->prepare();
+// Assuming the "contact/process" route exists...
+$form->setAttribute('action', $this->url('AlexDoctrine-2', array('action'=>'add')));
+// Set the method attribute for the form
+$form->setAttribute('method', 'post');?>
+<div>
+    <?php echo $this->form()->openTag($form); ?>
+    <?php echo $this->formCollection($form); ?>
+    <?php echo $this->form()->closeTag(); ?>
+
+</div>
+<br /><br />
+<div>
+    <table class="table tab-calls">
+        <tr>
+            <th>Number/id</th>
+            <th>Customer name</th>
+            <th>Subject</th>
+            <th>Content</th>
+        </tr>
+        <script> var callsList = <?php echo $this->allCallsJson;?></script>
+        <script id="onecall-tmpl" type="text/x-jquery-tmpl">
+            <tr class="tr_${id}">
+                    <td>${id}</td>
+                    <td>${customerFirstName}</td>
+                    <td>${subject}</td>
+                    <td>${content}</td>
+                    <td>
+                        <a  class="edit_call" href="<?php echo $this->url('AlexDoctrine-2', array('action'=>'edit'));?>/${id}">Edit</a>
+                        <a name="${id}" class="delete_call" href="<?php echo $this->url('AlexDoctrine-2',array('action'=>'delete'));?>/${id}">Delete</a>
+                    </td>
+            </tr>
+        </script>
+    </table>
+
+
+</div>
+
