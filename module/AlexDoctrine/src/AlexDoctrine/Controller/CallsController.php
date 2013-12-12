@@ -29,12 +29,14 @@ class CallsController extends AbstractActionController
      */
     public function indexAction()
     {
+
         $formManager = $this->serviceLocator->get('FormElementManager');
         $form = $formManager->get('callsform');
 
         $calls = $this->emService->getEntityManager()->getRepository('AlexDoctrine\Entity\Calls')->findAll();
         //prepare array for pushing filtering data
-        $result = [];
+
+        $result = array();
         foreach($calls as $call) {
             // make array from entity object
                 $hydrator = new ReflectionHydrator();
@@ -48,7 +50,7 @@ class CallsController extends AbstractActionController
 
         }
 
-		return new ViewModel(array(
+        return new ViewModel(array(
             'allCallsJson' => json_encode($result),
             'form' => $form)
         );
@@ -150,7 +152,7 @@ class CallsController extends AbstractActionController
 				$hydrator = new ReflectionHydrator();
 				$callArray  = $hydrator->extract($call);
                 $callArray['customerFirstName'] = $callArray['customers']->getFirstName();
-                unset($callArray['customers']);  
+                unset($callArray['customers']);
                 $response->setContent(Json::encode(array('response' => $callArray,'error'=>'')));
             }
             else
@@ -202,7 +204,10 @@ class CallsController extends AbstractActionController
     }
 
 
-
+    /**
+     * set entity manager to this class var
+     * @param type $service
+     */
     public function setEMService($service)
     {
 		$this->emService = $service;

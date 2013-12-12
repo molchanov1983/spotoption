@@ -18,6 +18,7 @@ use Zend\EventManager\EventInterface;
 use Zend\Mvc\MvcEvent;
 use Zend\Http\Request as HttpRequest;
 use Zend\Http\Response as HttpResponse;
+use Zend\Mvc\Router\RouteMatch;
 
 use Zend\Debug\Debug;
 
@@ -25,7 +26,7 @@ use Zend\Debug\Debug;
 class Module implements ConfigProviderInterface, BootstrapListenerInterface
 {
 
-    protected $denyAccesslist = array('');
+    protected $denyAccesslist = array('AlexDoctrine-1', 'AlexDoctrine-2', 'AlexDoctrine-3');
      //fot HTTP AUTH
     public function onBootstrap(EventInterface $event)
     {
@@ -40,13 +41,19 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
             ->getEventManager()
             ->attach(MvcEvent::EVENT_DISPATCH,
                     function (MvcEvent $event) use ($denyAccesslist,  $serviceManager) {
-                      // $match = $event->getRouteMatch();
-
+                       $match = $event->getRouteMatch();
+                         // No route match, this is a 404
+                        if (!$match instanceof RouteMatch) {
+                            return;
+                        }
+                        // Route is whitelisted
+                        $name = $match->getMatchedRouteName();
+                        if ( ! in_array($name, $denyAccesslist)) {
+                            return;
+                        }
 
                         $request  = $event->getRequest();
                         $response = $event->getResponse();
-
-
 
                         if ( ! ( $request instanceof HttpRequest && $response instanceof HttpResponse) )
                         {
@@ -58,37 +65,17 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
 
                         $authAdapter->setRequest($request);
                         $authAdapter->setResponse($response);
-//                echo "<pre>";
-//                print_r($request->getHeaders());
-//                echo "</pre>";
-//                die;
-//                        echo "<pre>";
-//                        print_r(get_class_methods($request));
-//                        echo "</pre>";
-//                        die;
-//                        echo "<pre>";
-//                        print_r($authAdapter);
-//                        echo "</pre>";
-//                   echo "<pre>";
-//                   print_r($response);
-//                   echo "</pre>";
-//                   die;
-//if ($request->getHeader('WWW-Authorization'))
+//
+//if ($request->getHeader('Authorization'))
 //{
-//    Debug::dump($authAdapter->authenticate());
+//    Debug::dump($request->getHeader('Authorization'));
 //    exit;
 //}
-
-
                         $result = $authAdapter->authenticate();
-
-
 
                         if ($result->isValid()) {
 
                             return; // everything OK
-                        } else {
-
                         }
 
                         $response->setContent('Access denied  HAHAHA');
@@ -103,7 +90,6 @@ class Module implements ConfigProviderInterface, BootstrapListenerInterface
     }
 
 
-	//этот метод вызывается modulemanagerom автоматически
     public function getAutoloaderConfig()
     {
         return array(

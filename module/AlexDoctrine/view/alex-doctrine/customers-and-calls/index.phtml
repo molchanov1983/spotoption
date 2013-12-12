@@ -5,7 +5,8 @@ Create form that shows all customers and their calls (use JQgrid jquery plugin)
     $this->InlineScript()->appendFile($this->basePath() .'/js/alex/plugin/grid.locale-en.js');
 //    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/plugin/jquery.jqGrid.min.js');
     $this->InlineScript()->appendFile($this->basePath() .'/js/alex/plugin/jquery.jqGrid.js');
-    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/myJqGrid.js');
+    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/APP.js');
+    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/customers_and_calls.js');
 
 // add css on the top of the page
     $this->headLink()->appendStylesheet($this->basePath() .'/css/lib/jquery-ui-1.10.3.custom.css');

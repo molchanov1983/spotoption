@@ -32,7 +32,7 @@ class CustomersAndCallsController extends AbstractActionController
         $calls = $this->emService->getEntityManager()->getRepository('AlexDoctrine\Entity\Calls')->findAll();
 
         //prepare array for pushing filtering data
-        $result = [];
+        $result = array();
         foreach($calls as $call) {
             // make array from entity object
                 $hydrator = new ReflectionHydrator();
@@ -51,10 +51,7 @@ class CustomersAndCallsController extends AbstractActionController
                 $result[] = $callArray;
 
         }
-//  echo "<pre>";
-//  print_r($result);
-//  echo "</pre>";
-//  die;
+
 		return new ViewModel(array(
             'callsAndCustomersJson' => json_encode($result)
             )
@@ -65,6 +62,10 @@ class CustomersAndCallsController extends AbstractActionController
 
 
 
+    /**
+     * set entity manager to this class var
+     * @param type $service
+     */
     public function setEMService($service)
     {
 		$this->emService = $service;

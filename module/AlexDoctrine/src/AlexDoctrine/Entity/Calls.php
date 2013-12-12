@@ -3,7 +3,7 @@
 namespace AlexDoctrine\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-// added by Stoyan
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use DoctrineModule\Validator\NoObjectExists;
@@ -25,8 +25,6 @@ use Zend\Form\Annotation;
  */
 class Calls
 {
-//         * @Annotation\Validator({"name":"\DoctrineModule\Validator\NoObjectExists",
-//     *                        "options":{"object_repository":"Customers","fields":{"firstName"}}})
 
     /**
     * @ORM\ManyToOne(targetEntity="Customers", inversedBy="calls", cascade={"persist"})

@@ -32,7 +32,10 @@ return array(
                 );
                 return $ctr;
             }
-        )
+        ),
+        'invokables' => array(
+            'AlexDoctrine\Controller\Rss' => 'AlexDoctrine\Controller\RssController'
+        ),
     ),
 
     'router' => array(
@@ -76,6 +79,20 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'AlexDoctrine\Controller\CustomersAndCalls',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'AlexDoctrine-4' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/rss[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'AlexDoctrine\Controller\Rss',
                         'action'     => 'index',
                     ),
                 ),

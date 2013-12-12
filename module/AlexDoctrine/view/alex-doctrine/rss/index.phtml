@@ -1,0 +1,31 @@
+Create simple rss reader.<br />
+1.	Create new PHP page<br />
+2.	Load RSS feed from some URL (your choice). The load of the RSS should be on client side.<br />
+3.	Show the news feed on page.<br />
+4.	Every click on article will show confirmation window.<br />
+If the customer clicks on 'ok' the article will be printed.
+
+
+<br /><br />
+
+
+<?php
+//<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+//add js on the bottom on the page
+//    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/plugin/jquery.tmpl.min.js');
+//    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/plugin/jquery.validate.min.js');
+    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/plugin/google_jsapi.js');
+    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/APP.js');
+    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/rss.js');
+//// add css on the top of the page
+//    $this->headLink()->appendStylesheet($this->basePath() .'/css/alex.css');
+//    $this->headLink()->appendStylesheet($this->basePath() .'/css/jquery.loadmask.css');
+?>
+<span id="for_server_error"></span>
+
+<div>
+
+
+ <div id="feed"></div>
+</div>
+
