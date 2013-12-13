@@ -8,24 +8,21 @@ If the customer clicks on 'ok' the article will be printed.
 
 <br /><br />
 
-
 <?php
-//<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-//add js on the bottom on the page
-//    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/plugin/jquery.tmpl.min.js');
-//    $this->InlineScript()->appendFile($this->basePath() .'/js/alex/plugin/jquery.validate.min.js');
+
     $this->InlineScript()->appendFile($this->basePath() .'/js/alex/plugin/google_jsapi.js');
     $this->InlineScript()->appendFile($this->basePath() .'/js/alex/APP.js');
     $this->InlineScript()->appendFile($this->basePath() .'/js/alex/rss.js');
 //// add css on the top of the page
-//    $this->headLink()->appendStylesheet($this->basePath() .'/css/alex.css');
-//    $this->headLink()->appendStylesheet($this->basePath() .'/css/jquery.loadmask.css');
+    $this->headLink()->appendStylesheet($this->basePath() .'/css/alex.css');
 ?>
-<span id="for_server_error"></span>
+
 
 <div>
 
+    <div id="feed">
+         <!--here will be rss list-->
+    </div>
 
- <div id="feed"></div>
 </div>
 
